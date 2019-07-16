@@ -21,13 +21,21 @@ RUN cd /opt && \
 ENV JBOSS_DEPLOY=$JBOSS_HOME/server/default/deploy/
 CMD $JBOSS_HOME/bin/run.sh -b 0.0.0.0
 
-ARG JSS7_VERSION=7.3.1398
+ARG JSS7_VERSION=7.4.0-144
 
 # Add JSS7 stack binaries 
 ADD https://github.com/RestComm/jss7/releases/download/$JSS7_VERSION/restcomm-jss7-$JSS7_VERSION.zip /opt/
+#ADD https://github.com/RestComm/jss7/archive/$JSS7_VERSION.zip /opt/
+
+#RUN mv /opt/7.3.1398.zip /opt/restcomm-jss7-7.3.1398.zip
+
+RUN ls -l /opt
 
 RUN cd /opt \
   && unzip /opt/restcomm-jss7-$JSS7_VERSION.zip
+#RUN ls -l /opt
+#RUN mv /opt/jss7-7.3.1398 /opt/restcomm-jss7-7.3.1398
+RUN ls -l /opt
 
 
 # Deploy JSS7 into JBoss (does what `ant deploy` would do)
@@ -37,14 +45,14 @@ RUN mv /opt/restcomm-jss7-$JSS7_VERSION/ss7/shell/lib $JBOSS_DEPLOY/lib
 RUN mv /opt/restcomm-jss7-$JSS7_VERSION/oam/new-ui $JBOSS_DEPLOY/
 
 # Deploy RAs
-ADD https://github.com/RestComm/jss7/releases/download/$JSS7_VERSION/RA.zip /opt/
+#ADD https://github.com/RestComm/jss7/releases/download/$JSS7_VERSION/RA.zip /opt/
 
-RUN cd /opt \
-  && unzip /opt/RA.zip \
-  && mv /opt/RA/CAP/restcomm-slee-ra-cap-du-7.3.72.jar $JBOSS_DEPLOY/ \
-  && mv /opt/RA/ISUP/restcomm-slee-ra-isup-du-7.3.72.jar $JBOSS_DEPLOY/ \
-  && mv /opt/RA/MAP/restcomm-slee-ra-map-du-7.3.72.jar $JBOSS_DEPLOY/ \
-  && mv /opt/RA/TCAP/restcomm-slee-ra-tcap-du-7.3.72.jar $JBOSS_DEPLOY/
+#RUN cd /opt \
+#  && unzip /opt/RA.zip \
+#  && mv /opt/RA/CAP/restcomm-slee-ra-cap-du-7.3.72.jar $JBOSS_DEPLOY/ \
+#  && mv /opt/RA/ISUP/restcomm-slee-ra-isup-du-7.3.72.jar $JBOSS_DEPLOY/ \
+#  && mv /opt/RA/MAP/restcomm-slee-ra-map-du-7.3.72.jar $JBOSS_DEPLOY/ \
+#  && mv /opt/RA/TCAP/restcomm-slee-ra-tcap-du-7.3.72.jar $JBOSS_DEPLOY/
 
 # Deploy Test SBB
-COPY services-DU-7.4.0-SNAPSHOT.jar $JBOSS_DEPLOY/
+#COPY services-DU-7.4.0-SNAPSHOT.jar $JBOSS_DEPLOY/
